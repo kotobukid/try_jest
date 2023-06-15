@@ -2,7 +2,7 @@ import os from 'os';
 
 // ネットワークインターフェースの情報を取得
 
-const get_ipv4nicnames = (): string[] => {
+const get_ipv4_addresses = (): string[] => {
     const names: string[] = [];
     const interfaces: NodeJS.Dict<os.NetworkInterfaceInfo[]> = os.networkInterfaces();
     for (const name in interfaces) {
@@ -24,6 +24,7 @@ const get_ipv4nicnames = (): string[] => {
 }
 
 const getIpAddress = (interfaceName: string) => {
+    console.log(interfaceName)
     const interfaces = os.networkInterfaces();
     const interfaceInfo = interfaces[interfaceName];
 
@@ -34,16 +35,17 @@ const getIpAddress = (interfaceName: string) => {
     // interfaceInfoは配列で、IPv4とIPv6の情報が含まれている
     // IPv4の情報のみを取得する
     const ipv4Info = interfaceInfo.find(info => info.family === 'IPv4');
-
+    console.log(ipv4Info)
     return ipv4Info ? ipv4Info.address : null;
 }
 
 const get_addresses = () => {
-    return get_ipv4nicnames().map((name: string) => {
+    return get_ipv4_addresses().map((name: string) => {
         return getIpAddress(name)
     }).filter((n: string | null) => !!n)
 };
 
 export {
+    get_ipv4_addresses,
     get_addresses
 }
