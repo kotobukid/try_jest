@@ -1,4 +1,4 @@
-const myMath = require("./math.js");
+const myMath = require("../funcs/math.ts");
 
 describe('四則演算', () => {
     test('add', () => {
